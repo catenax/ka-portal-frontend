@@ -25,8 +25,6 @@ import {
   DialogContent,
 } from 'cx-portal-shared-components'
 
-
-
 interface CXOntologyDialogProps {
   show: boolean
   url: string
@@ -34,7 +32,6 @@ interface CXOntologyDialogProps {
 }
 
 const CXOntologyDialog = ({ show, url, onClose }: CXOntologyDialogProps) => {
-
   return (
     <Dialog open={show}>
       <DialogHeader

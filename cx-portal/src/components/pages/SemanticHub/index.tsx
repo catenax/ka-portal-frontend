@@ -37,7 +37,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import CXOntologyDialog from './CXOntologyDialog'
 
 export default function SemanticHub() {
-  const kaOntology = 'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/infrastructure/consumer/resources/cx-ontology.json'
+  const kaOntology =
+    'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/infrastructure/consumer/resources/cx-ontology.json'
   const { t } = useTranslation()
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -65,9 +66,9 @@ export default function SemanticHub() {
   }
 
   useEffect(() => {
-    console.log(encodeURIComponent(kaOntology));
+    console.log(encodeURIComponent(kaOntology))
     if (modelId) {
-      if(modelId === kaOntology){
+      if (modelId === kaOntology) {
         setShowCXOntology(true)
       } else {
         resetMessages()
@@ -120,10 +121,10 @@ export default function SemanticHub() {
     setShowModel(false)
     resetMessages()
   }
-  
+
   const onCXOntologyClose = () => {
     navigate('/semantichub/')
-    setShowCXOntology(false);
+    setShowCXOntology(false)
   }
 
   return (
@@ -161,7 +162,11 @@ export default function SemanticHub() {
         <ModelTable onModelSelect={onModelSelect} />
       </main>
       <ModelDetailDialog show={showModel} onClose={onDetailClose} />
-      <CXOntologyDialog show={showCXOntology} url={kaOntology} onClose={onCXOntologyClose} />
+      <CXOntologyDialog
+        show={showCXOntology}
+        url={kaOntology}
+        onClose={onCXOntologyClose}
+      />
       <ModelImportDialog
         show={importModel}
         onClose={() => setImportModel(false)}
