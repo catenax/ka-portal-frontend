@@ -11,6 +11,7 @@ Here are three ways to run the application locally on http://localhost:3000/
 
 ### Local build & run
 
+    npm login --scope=@catenax-ng --registry=https://npm.pkg.github.com
     yarn
     yarn build
     yarn start
