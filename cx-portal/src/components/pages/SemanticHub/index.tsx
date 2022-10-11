@@ -34,8 +34,11 @@ import { semanticModelsSelector } from 'features/semanticModels/slice'
 import UserService from 'services/UserService'
 import { ROLES } from 'types/Constants'
 import { useNavigate, useParams } from 'react-router-dom'
+import CXOntologyDialog from './CXOntologyDialog'
 
 export default function SemanticHub() {
+  const kaOntology =
+    'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/infrastructure/consumer/resources/cx-ontology.json'
   const { t } = useTranslation()
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -45,6 +48,7 @@ export default function SemanticHub() {
   const [showErrorAlert, setShowErrorAlert] = useState<boolean>(false)
   const [errorAlertMsg, setErrorAlertMsg] = useState<string>('')
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false)
+  const [showCXOntology, setShowCXOntology] = useState<boolean>(false)
   const [successAlertMsg, setSuccessAlertMsg] = useState<string>('')
   const { deleteError, deleteModelId, uploadedModel, uploadError } =
     useSelector(semanticModelsSelector)
@@ -62,11 +66,16 @@ export default function SemanticHub() {
   }
 
   useEffect(() => {
+    console.log(encodeURIComponent(kaOntology))
     if (modelId) {
-      resetMessages()
-      setShowModel(true)
-      const encodedUrn = encodeURIComponent(modelId)
-      dispatch(fetchSemanticModelById(encodedUrn))
+      if (modelId === kaOntology) {
+        setShowCXOntology(true)
+      } else {
+        resetMessages()
+        setShowModel(true)
+        const encodedUrn = encodeURIComponent(modelId)
+        dispatch(fetchSemanticModelById(encodedUrn))
+      }
     }
   }, [modelId])
 
@@ -113,6 +122,11 @@ export default function SemanticHub() {
     resetMessages()
   }
 
+  const onCXOntologyClose = () => {
+    navigate('/semantichub/')
+    setShowCXOntology(false)
+  }
+
   return (
     <>
       <StageHeader title={t('content.semantichub.title')} />
@@ -148,6 +162,11 @@ export default function SemanticHub() {
         <ModelTable onModelSelect={onModelSelect} />
       </main>
       <ModelDetailDialog show={showModel} onClose={onDetailClose} />
+      <CXOntologyDialog
+        show={showCXOntology}
+        url={kaOntology}
+        onClose={onCXOntologyClose}
+      />
       <ModelImportDialog
         show={importModel}
         onClose={() => setImportModel(false)}
