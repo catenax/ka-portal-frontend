@@ -91,7 +91,14 @@ export enum OVERLAYS {
   PARTNER = 'partner',
   APP = 'app',
   SERVICE_REQUEST = 'service_request',
+  APPMARKETPLACE_REQUEST = 'appmarketplace_request',
   IDP = 'idp',
+  IDP_CONFIRM = 'idp_confirm',
+  IDP_STATUS = 'idp_status',
+  IDP_TEST_RUN = 'idp_test_run',
+  APP_OVERVIEW_CONFIRM = 'app_overview_confirm',
+  APP_DETAILS_OVERLAY = 'app_details_overlay',
+  CONFIRM_USER_ACTION = 'confirm_user_action',
 }
 
 export enum ACTIONS {
@@ -106,6 +113,7 @@ export enum ROLES {
   ADMIN_CONNECTOR = 'Admin - Connector Setup',
   ADMIN_USER = 'Admin - User Management',
   INVITE_NEW_PARTNER = 'invite_new_partner',
+  NOTIFICATION_VIEW = 'view_notifications',
   SETUP_IDP = 'setup_idp',
   SETUP_CLIENT = 'setup_client',
   APPSTORE_VIEW = 'view_apps',
@@ -116,6 +124,8 @@ export enum ROLES {
   APPSTORE_EDIT = 'edit_apps',
   APPSTORE_FILTER = 'filter_apps',
   APPSTORE_DELETE = 'delete_apps',
+  APPMANAGEMENT_VIEW = 'add_apps',
+  APPOVERVIEW_VIEW = 'add_apps',
   CONNECTOR_SETUP = 'setup_connector',
   DATACATALOG_VIEW = 'view_data_catalog',
   DIGITALTWIN_VIEW = 'view_digital_twin',

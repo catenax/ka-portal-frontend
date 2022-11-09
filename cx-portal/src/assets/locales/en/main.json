@@ -47,7 +47,31 @@
   "overlays": {
     "invite": "Invite new Business Partner",
     "add_user": "Add new user",
-    "add_techuser": "Add new technical user"
+    "add_techuser": "Add new technical user",
+    "idp_delete_info_title": "Deletion of the identity provider.",
+    "idp_delete_info_intro": "Please note, all users which are not migrated to the new iDP wii get irreversible deleted.",
+    "idp_delete_success_title": "Identity provider {{name}} was successfully deleted.",
+    "idp_delete_success_intro": "The window will close automatically. In case it doesn't, please use the 'close' button in on the top right.",
+    "idp_delete_error_title": "The identity provider did not got deleted.",
+    "idp_delete_error_intro": "Please retry or contact an administrator if the failure persist.",
+    "idp_delete_tooltip_info": "Please disable the service first or make sure if any one of the service for following company is working.",
+    "idp_status_change_success": "Identity Provider {{ name }} was successfully {{ status }}",
+    "idp_status_change_error": "The indentity provider was not {{ status }}",
+    "idp_status_change_info": "{{status}} identity provider",
+    "idp_status_change_intro2": "Are you sure you want to enable this idp?",
+    "idp_status_change_intro1": "Disable the idp will always result into the deactivation, but not deletion. You can always enable it again",
+    "idp_status_tooltip_info": "Atleast one company service needs to enabled",
+    "idp_test_intro1": "Identity Provider was successfully created.",
+    "idp_test_intro2": "The IdP is disabled for now and get enabled below.",
+    "idp_test_description": "Please note, before enabling the Idp and trying to login, you need to setup the Idp connection on you side as well and connect your CX user to the IdP connection. To enable the same, please fillout the fields below.",
+    "idp_test_step_text1": "Step by Step approach",
+    "idp_test_step_text2": "Setup your own user for the new idp by enhancing your user profile.",
+    "idp_test_step_text3": "Activate the idp.",
+    "idp_test_step_text4": "Run a test via incognito mode of your browser.",
+    "idp_test_username_label": "Enter the username inside the new idp",
+    "idp_test_userid_label": "Enter the user id inside the new idp",
+    "idp_form_userId_error": "Please enter a valid user Id",
+    "idp_form_username_error": "Please enter a valid username"
   },
   "actions": {
     "SignOut": "Sign out",
@@ -102,6 +126,9 @@
       },
       "appStoreSection": {
         "title": "New Apps"
+      },
+      "emptyCards": {
+        "title": "New apps will get added here as soon as you have any assigned"
       }
     },
     "appstore": {
@@ -211,7 +238,7 @@
     "digitaltwin": {
       "table": {
         "title": "Overview Digital Twins",
-        "searchfielddefaulttext": "Search by Name/Identifier",
+        "searchfielddefaulttext": "Search by party instance id",
         "columns": {
           "idShort": "Name",
           "sm_count": "Submodel Count",
@@ -263,7 +290,7 @@
       "inputPlaceholder": "Search for Apps",
       "recently": {
         "header": "Recently changed",
-        "subheader": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard .Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard ."
+        "subheader": "Below you can find your recently changed apps. By clicking on the app, you can open up the deatils/proceed on the app release process. The sub-menu added to each app card will help you to do changes on active apps. Below the recent changed apps, a list of all by your company provided apps can get found. Please scroll down to get more details."
       },
       "filter": {
         "all": "All",
@@ -271,7 +298,19 @@
         "inactive": "Inactive",
         "wip": "WIP"
       },
-      "addbtn": "Create new App"
+      "addbtn": "Register your App",
+      "confirmModal": {
+        "title": "Change app {appName}",
+        "description": "The app configuration is currently 'work in progress'. Do you want to open the app release process for {appName} and further enhance the app details? Please note you do not need to finish the app release configuration. You can use the save button and proceed later if wanted."
+      },
+      "details": {
+        "longDescription": "Long Description",
+        "price": "Price:",
+        "language": "Language:",
+        "useCase": "Use Case:",
+        "title": "Submitted App Details",
+        "description": "The app {appName} is already submitted for review by the network administrator to publish the app on the market place. Till the review is finished, you can not do any changes to the app"
+      }
     },
     "appreleaseprocess": {
       "message": "App Release Process Message"
@@ -375,6 +414,10 @@
         "details": "Details"
       }
     },
+    "userAdded": {
+      "success": "User added successfully",
+      "failure": "User was not added"
+    },
     "provisionIdp": {
       "title": "Setup your company IDP",
       "send": "Submit IDP request",
@@ -401,6 +444,8 @@
       "appUserDetails": {
         "headline": "App Access Management - {{app}}",
         "subheadline": "App Access Management",
+        "userRoleSuccessMsg": "Roles got successfully updated.",
+        "userRoleErrorMsg": "Roles have not got updated.",
         "header": {
           "title": "App Roles",
           "subtitle": "Below you can find an overview of the available app roles as well as a role description by selectiong the 'Role Description' field. To add the user role to an existing active company user, please use the 'add role' button below the 'Available Role' area."
@@ -440,6 +485,45 @@
         "noteDeleteUser": "Note: The deletion will be permanently. It is not possible the reactive the user again.",
         "confirmDeleteNotificationTitle": "User deletion was successful.",
         "confirmDeleteNotificationDescription": "The action can not be reversed. Please create a new user in case it's needed"
+      },
+      "deleteUserConfirm": {
+        "header": "Delete user account",
+        "confirmTitle": "Are you sure you want to delete the user account of {userName}?",
+        "description": "By deleting the account, the access of this user to Catena-X as well as any rights and data access will get revoked.",
+        "note": "Note: If you delete the account now, you wont be able to reactivate it later.",
+        "successTitle": "User successfully deleted",
+        "successDescription": "The user is successfully deleted and all rights are disabled.",
+        "errorTitle": "Something went wrong",
+        "errorDescription": "Your user couldn't get deleted. Please try it later again or contact your administrator."
+      },
+      "suspendUserConfirm": {
+        "header": "Suspend user account",
+        "confirmTitle": "Are you sure you want to suspend the user account of {userName}?",
+        "description": "By suspending the account, the access of this user to Catena-X as well as any permissions and data accesses will get deactivated temporarily.",
+        "note": "Note: Suspended accounts can get reactivated anytime.",
+        "successTitle": "User successfully suspended",
+        "successDescription": "The user is successfully suspended and all rights are disabled.",
+        "errorTitle": "Something went wrong",
+        "errorDescription": "Your user couldn't get suspended. Please try it later again or contact your administrator."
+      },
+      "resetPasswordConfirm": {
+        "header": "Password Reset",
+        "confirmTitle": "Are you sure you want to reset the password?",
+        "note": "The user {userName} will receive an email to reset the password.",
+        "successTitle": "Password Reset successfully triggered",
+        "successDescription": "The password reset request got send to {userName}.",
+        "errorTitle": "Something went wrong",
+        "errorDescription": "The password reset was unsuccessful. Please try it later again or contact the administrator."
+      },
+      "adminUserConfirm": {
+        "header": "Delete user account",
+        "confirmTitle": "Are you sure you want to delete the user account?",
+        "description": "By deleting the account, the access of this user to Catena-X as well as any rights and data access will get revoked.",
+        "note": "Note: If you delete the account now, you wont be able to reactivate it later.",
+        "successTitle": "User successfully deleted",
+        "successDescription": "The user is successfully deleted and all rights are disabled.",
+        "errorTitle": "Something went wrong",
+        "errorDescription": "Your user couldn't get deleted. Please try it later again or contact your administrator."
       }
     },
     "idpmanagement": {
@@ -456,15 +540,30 @@
       "clientId": "Client ID",
       "secret": "Secret",
       "signatureAlgorithm": "Signature algorithm",
-      "clientAuthMethod": "Authentication Method"
+      "clientAuthMethod": "Authentication Method",
+      "tokenUrl": "Token URL",
+      "idpTypeSelection": "IdP Type Selection",
+      "companyName": "Company Name",
+      "done": "Done",
+      "loading": "Loading",
+      "load": "Load",
+      "selectIpsText": "Select the type of IdP which should get newly created",
+      "addMetaDataText": "Add your metadata URL here, to automatically setup all the idp integration relevant metadata. When clicking, load. then metadata file is getting loaded and respective values will show up below.",
+      "idp_meta_description": "Add your metadata URL here, to automatically setup all the idp integration relevant metadata. When clicking, Load then metadata file is getting loaded and respective values will show up below.",
+      "client_id_required_error": "Client id is required",
+      "client_id_invalid_error": "Please enter valid client id",
+      "client_secret_required_error": "Client secret is required",
+      "client_secret_invalid_error": "Please enter valid client secret",
+      "metadata_url_required_error": "Metadata url is required",
+      "metadata_url_invalid_error": "Please enter valid metadata url"
     },
     "addUser": {
       "headline": "Add User Account",
-      "subheadline": "tbd",
+      "subheadline": "Add a new user account by adding the user first and last name as well as the email address. Below the input fields select the respective user roles which the user should have. One role is minimum needed to enable the user to access the network.",
       "singleUser": "Single User",
       "multipleUser": "Multiple User",
       "multipleUserHeadline": "Add multiple users by file upload:",
-      "multipleUserSubheadline": "Please use this <1>upload template</1>, to add multiple users by file",
+      "multipleUserSubheadline": "Please use this <1>upload template</1>, to add multiple users via the bulk load.",
       "technicalUserHeadline": "Technical User Creation",
       "technicalUserSubheadline": "Create a technical user by adding the relevant information requested below. Please note that the description is used for your own reference only. In case you have a number of technical users it will help you to differenciate between the technical user accounts.",
       "technicalUserSubheadlineSuccess": "Congratulations, the technical user got successfully created. Below you can find all the relevant details needed to apply the technical user for your service connection. Please ensure that you keep this secrets confidential.",
@@ -553,11 +652,12 @@
       "pending": "Requested",
       "privacy": {
         "heading": "Privacy Policy",
-        "message": "The Privacy Policy states which data the business applications collects, handles and processes. The details below explicitly show which company / user information are getting collected/stored."
+        "message": "The Privacy Policy states which data the business applications collects, handles and processes. The details below explicitly show which company / user information are getting collected/stored.",
+        "notSupportedMessage": "Currently not yet supported"
       },
       "howtouse": {
-        "heading": "Terms of use",
-        "message": "These terms of use regulate the relationship between app prospects and app providers. The terms of use, as well as the data models and further information can be viewed by clicking on the hyperlinks."
+        "heading": "Relevant Documents",
+        "message": "The terms of use, as well as the data models and further information can be viewed by clicking on the documents shared below."
       },
       "providerInformation": {
         "heading": "Provider Information",
@@ -566,56 +666,55 @@
         "website": "Provider Homepage",
         "email": "Email",
         "phone": "Phone"
-      }
+      },
+      "pendingTooltip": "Application subscription is pending. The app provider is informed",
+      "subscribedTooltip": "The app is already subscribed by your company"
     },
     "apprelease": {
       "headerTitle": "App Release Process",
       "descHeading": "Publish your company app inside the Catena-X marketplace",
-      "descMessage": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard .Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard .",
-      "startCreatingButton": "Start creating your app",
+      "descMessage": "Register your app and metdata to get published on the marketplace. Scrolling down, you can find a quick overview of the app release process.",
+      "startCreatingButton": "Register your app",
       "appOverviewButton": "Overview my apps",
       "stepHeading": "The process will guide your through the following steps:",
       "dividerText": "Lets get started to publishing your app...",
       "marketplaceHeading": "App Marketplace upcomming submission requirements",
-      "neuButton": "Neu",
+      "neuButton": "New",
       "marketplaceTitle": "Requirement Lorem ipsum",
       "marketplaceExplanation": "Expalanation of the requirement",
       "stepper": {
-        "appMarketCard": "App Market Card",
-        "appPage": "App Page",
+        "appMarketCard": "App Card",
+        "appPage": "App Page Details",
         "contractAndConsent": "Contract & Consent",
         "technicalIntegration": "Technical Integration",
         "betaTest": "Beta Test",
         "validateAndPublish": "Validate & Publish"
       },
       "appMarketCard": {
-        "headerTitle": "Create App",
-        "headerDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard .Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard .",
+        "headerTitle": "Create App Card",
+        "headerDescription": "The following input fields and uploads are used to create your app 'App Card' which will be placed inside the marketplace. The app card is the first touchpoint with the customer. While entering the data below, have a look at the app card on the left side which is getting autoupdated based on your input.",
         "defaultCardAppImageAlt": "Part Chain",
         "defaultCardAppProvider": "Catena-X",
-        "defaultCardAppTitle": "Digital Twin Aspect Debugger",
+        "defaultCardAppTitle": "This is the app title",
         "defaultCardShortDescriptionEN": "[short description EN] Lorem ipsum sapientem ne neque dolor erat",
-        "appTitle": "App title",
-        "appTitlePlaceholder": "name@domain.com",
-        "appProvider": "App provider",
-        "appProviderPlaceholder": "prefill: [company name]",
+        "appTitle": "App Title",
+        "appProvider": "App Provider",
         "shortDescriptionEN": "Short Description - EN",
         "shortDescriptionDE": "Short Description - DE",
         "useCaseCategory": "Use Case /Category",
         "useCaseCategoryPlaceholder": "Choose the relevant Use Case",
         "appLanguage": "App Language",
         "appLanguagePlaceholder": "Choose App Language",
-        "pricingInformation": "Pricing Information",
-        "pricingInformationPlaceholder": "Please select a pricing type"
+        "pricingInformation": "Pricing Information (e.g. free / charged)"
       },
       "appPage": {
         "headerTitle": "App Details",
         "headerDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard .Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard .",
-        "longDescriptionEN": "Long Description - EN",
-        "longDescriptionDE": "Long Description - DE",
+        "longDescriptionEN": "Long Description (en)",
+        "longDescriptionDE": "Long Description (de)",
         "images": "Images",
         "note": "Note:",
-        "maxThreeImages": "Max.3 Images",
+        "maxThreeImages": "Max.3 Images are supported",
         "connectData": "Connect Data",
         "dataSecurityInformation": "Data Security Information",
         "uploadDataPrerequisits": "Upload “Data Prerequisits”",
@@ -626,9 +725,9 @@
         "providerHomePage": "Provider Homepage",
         "providerContactEmail": "Customer Contact E-Mail",
         "providerPhoneContact": "Provider Phone Contact",
-        "providerPhoneContactPlaceholder": "e.g. +XX (XXX) XXXXXXXXXX or +XX XXXXXXXXXX or +XXXXXXXXXXXX",
+        "providerPhoneContactPlaceholder": "Following formats are supported: +xx (xxx) xxxxxxxxxx; +xx xxxxxxxxxx and +xxxxxxxxxxxx",
         "pleaseEnterValidEmail": "Please enter a valid Customer Contact E-Mail",
-        "pleaseEnterValidContact": "Please enter a valid Provider Phone Contact in the format +XX (XXX) XXXXXXXXXX or +XX XXXXXXXXXX or +XXXXXXXXXXXX"
+        "pleaseEnterValidContact": "Please enter a valid Provider Phone Contact in the format +xx (xxx) xxxxxxxxxx; +xx xxxxxxxxxx and +xxxxxxxxxxxx"
       },
       "contractAndConsent": {
         "headerTitle": "Consent & Contract",
@@ -680,7 +779,7 @@
         "noItemsSelected": "No Items Selected",
         "note": "Note:",
         "OnlyOneFileAllowed": "Only one file for upload allowed",
-        "max3Images": "Max. 3 Images",
+        "max3Images": "Max. 3 Images are supported",
         "minimum": "Minimum",
         "charactersRequired": " characters required",
         "maximum": "Maximum",
@@ -706,6 +805,13 @@
       "noDataMessage": "No data available",
       "subscriptionHeading": ">> there are already active subscriptions for the service {serviceName}",
       "subscribeSuccessMsg": "Subscribed Successfully"
+    },
+    "appMarketplace": {
+      "headline": "Order Business Application",
+      "desc1": "You have started the subscription request for app {appName}.",
+      "desc2": "Please note that the subscription request will trigger a service call on provider side. The app provider will align with you all further steps. This may take up to 5 days.",
+      "desc3": "As soon as all queries are finalized, the app provider will be able to activate your app tenant.",
+      "desc4": "As soon as this is done, a notification will be send to you, which enables you to assign the relevant user roles."
     }
   },
   "navigation": {
@@ -723,8 +829,9 @@
       "company": "Company Name",
       "status": "Status",
       "role": "Role",
-      "active": "Active",
-      "inactive": "Inactive",
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "DELETED": "DELETED",
       "name": "Name",
       "details": "Details",
       "userName": "Username",
@@ -732,7 +839,10 @@
       "authType": "Auth Type",
       "description": "Description",
       "secret": "Secret",
-      "permission": "Permission"
+      "permission": "Permission",
+      "userId": "User Id",
+      "redirectURI": "Redirect URI",
+      "toBeUpdated": "To be updated"
     },
     "actions": {
       "cancel": "Cancel",
@@ -748,11 +858,16 @@
       "reload": "Reload Page",
       "homepage": "Homepage",
       "confirmDelete": "Are you sure you want to delete {{ object }} {{ name }}?",
-      "noteDelete": "Note: The deletion will be permanently. It is not possible the reactive the {{ object }} again."
+      "noteDelete": "Note: The deletion will be permanently. It is not possible the reactive the {{ object }} again.",
+      "submit": "Submit",
+      "no": "No",
+      "yes": "Yes"
     },
     "state": {
       "enabled": "enabled",
-      "disabled": "disabled"
+      "disabled": "disabled",
+      "enable": "Enable",
+      "disable": "Disable"
     },
     "objects": {
       "app": "app",

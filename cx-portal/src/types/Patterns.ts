@@ -18,33 +18,54 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+const DOMAIN =
+  /([a-z0-9]|[a-z0-9][a-z0-9-]{0,61}[a-z0-9])(\.([a-z0-9]|[a-z0-9][a-z0-9-]{0,61}[a-z0-9])){1,10}/i
+const URLPATH = /(\/[a-z0-9-._~:/?#[\]@!$&'()*+,;=%]{0,500}){0,20}/
+
 export const Patterns = {
-  BPN: /^(BPNL|CAX)[0-9A-Z]{12}$/i,
-  URL: /^((https?):\/\/([^:/\s]+))/,
-  MAIL: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+  BPN: /^BPNL[0-9A-Z]{12}$/i,
+  MAIL: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-z0-9-]+\.)+[a-z]{2,}))$/i,
+  DOMAIN: new RegExp(`^${DOMAIN.source}$`, 'i'),
+  PATH: new RegExp(`^${URLPATH.source}$`, 'i'),
+  URL: new RegExp(
+    `^(https)://(${DOMAIN.source})(:\\d{1,5})?(${URLPATH.source})?$`,
+    'i'
+  ),
   NAME: /^([A-Za-zÀ-ÿ-,.']{1,40} ?){1,8}$/i,
   UUID: /^[a-f0-9]{8}(-[a-f0-9]{4}){4}[a-f0-9]{8}$/i,
   prefix: {
     BPN: /^BPNL/i,
-    URL: /^https?:/i,
+    URL: /^https:/i,
     MAIL: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@/,
+    URNID: /^urn:uuid:[a-z0-9]{8}(-[a-z0-9]{4}){3}-[a-z0-9]{12}$/i,
   },
   SEARCH: /^[a-zA-ZÀ-ÿ0-9 !?@&_\-.]{3,80}$/,
   appMarketCard: {
     appTitle: /^([A-Za-z.:_@&0-9 -]){5,40}$/,
     appProvider: /^([A-Za-z ]){3,30}$/,
-    shortDescriptionEN: /^([A-Za-z.:@0-9& ,]){10,255}$/,
-    shortDescriptionDE: /^([A-Za-z.:@0-9& ,äüö]){10,255}$/,
+    shortDescriptionEN: /^([a-zA-Z0-9 !?@&#'"()_\-=/*.,;:]){10,255}$/,
+    shortDescriptionDE: /^([a-zA-ZÀ-ÿ0-9 !?@&#'"()_\-=/*.,;:]){10,255}$/,
     useCaseCategory: /^([A-Za-z])$/,
     appLanguage: /^([A-Za-z ])$/,
     pricingInformation: /^([A-Za-z0-9/€ ]){1,15}$/,
   },
   appPage: {
-    longDescriptionEN: /^([A-Za-z.:@0-9&_ ,-]){10,2000}$/,
-    longDescriptionDE: /^([A-Za-z.:@0-9&_ ,äüö-]){10,2000}$/,
+    longDescriptionEN: /^([a-zA-Z0-9 !?@&#'"()[\]_\-+=<>/*.,;:]){10,2000}$/,
+    longDescriptionDE: /^([a-zA-ZÀ-ÿ0-9 !?@&#'"()[\]_\-+=<>/*.,;:]){10,2000}$/,
     providerHomePage: /^([A-Za-z.:@&0-9 !])+$/,
     phone: /^\+(\d{2})+(\(\s\d{3}\))?\s?\d{9,20}$/,
   },
+  idp: {
+    clientId: /^[a-zA-Z0-9-]*$/,
+    clientSecret: /^[a-zA-Z0-9]*$/,
+    metaDataUrl: /^[a-zA-Z0-9- ]*$/,
+  },
 }
+
+export const isMail = (expr: string) => Patterns.MAIL.test(expr)
+export const isBPN = (expr: string) => Patterns.BPN.test(expr)
+export const isDomain = (expr: string) => Patterns.DOMAIN.test(expr)
+export const isURL = (expr: string) => Patterns.URL.test(expr)
+export const isUUID = (expr: string) => Patterns.UUID.test(expr)
 
 export default Patterns

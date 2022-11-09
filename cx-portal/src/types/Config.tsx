@@ -176,6 +176,7 @@ export const ALL_PAGES: IPage[] = [
   },
   {
     name: PAGES.NOTIFICATIONS,
+    role: ROLES.NOTIFICATION_VIEW,
     element: <NotificationCenter />,
   },
   {
@@ -190,12 +191,12 @@ export const ALL_PAGES: IPage[] = [
   },
   {
     name: PAGES.APP_MANAGEMENT,
-    // role: ROLES.VIEW_APP_RELEASE,
+    role: ROLES.APPMANAGEMENT_VIEW,
     element: <AppOverview />,
   },
   {
     name: PAGES.APPOVERVIEW,
-    //role: ROLES.VIEW_APP_RELEASE,
+    role: ROLES.APPOVERVIEW_VIEW,
     element: <AppOverview />,
   },
   {
@@ -208,6 +209,7 @@ export const ALL_PAGES: IPage[] = [
     isRoute: true,
     element: (
       <Route
+        key={`${PAGES.APPRELEASEPROCESS}/form`}
         path={`${PAGES.APPRELEASEPROCESS}/form`}
         element={<AppReleaseProcessForm />}
       />
@@ -361,12 +363,38 @@ export const ALL_OVERLAYS: IOverlay[] = [
     role: ROLES.APPSTORE_VIEW_SERVICES,
   },
   {
+    name: OVERLAYS.APPMARKETPLACE_REQUEST,
+    role: ROLES.APPSTORE_VIEW,
+  },
+  {
     name: OVERLAYS.IDP,
     role: ROLES.IDP_VIEW,
   },
   {
     name: OVERLAYS.NOT_FOUND,
     role: ROLES.IDP_VIEW,
+  },
+  {
+    name: OVERLAYS.IDP_CONFIRM,
+    role: ROLES.IDP_DELETE,
+  },
+  {
+    name: OVERLAYS.IDP_STATUS,
+    role: ROLES.IDP_DISABLE,
+  },
+  {
+    name: OVERLAYS.IDP_TEST_RUN,
+    role: ROLES.IDP_ADD,
+  },
+  {
+    name: OVERLAYS.APP_OVERVIEW_CONFIRM,
+    role: ROLES.APPOVERVIEW_VIEW,
+  },
+  {
+    name: OVERLAYS.APP_DETAILS_OVERLAY,
+  },
+  {
+    name: OVERLAYS.CONFIRM_USER_ACTION,
   },
 ]
 

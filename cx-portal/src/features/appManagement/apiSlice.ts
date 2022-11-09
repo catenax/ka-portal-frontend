@@ -50,6 +50,55 @@ export type CreateAppStep1Item = {
   price: string
 }
 
+export type ImageType = {
+  src: string
+  alt?: string
+}
+
+export type DocumentData = {
+  documentId: string
+  documentName: string
+}
+
+export type DocumentAppContract = {
+  APP_CONTRACT: Array<DocumentData>
+}
+
+export type NewAppDetails = {
+  agreements: any[]
+  contactEmail: string
+  contactNumber: string
+  descriptions: string[]
+  documents: DocumentAppContract
+  images: string[]
+  leadPictureUri: ImageType
+  price: string
+  provider: string
+  providerName: string
+  providerUri: string
+  supportedLanguageCodes: string[]
+  title: string
+  useCase: string[]
+}
+export type AgreementType = {
+  agreementId: string
+  name: string
+}
+
+export type AgreementStatusType = {
+  agreementId: string
+  consentStatus: string | boolean
+}
+
+export type ConsentType = {
+  agreements: AgreementStatusType[]
+}
+
+export type UpdateAgreementConsentType = {
+  appId: string
+  body: ConsentType
+}
+
 export const apiSlice = createApi({
   reducerPath: 'rtk/appManagement',
   baseQuery: fetchBaseQuery(apiBaseQuery()),
@@ -62,20 +111,14 @@ export const apiSlice = createApi({
     }),
     addCreateApp: builder.mutation<void, CreateAppStep1Item>({
       query: (body: CreateAppStep1Item) => ({
-        url: `/api/apps/createapp`,
+        url: `/api/Apps/createapp`,
         method: 'POST',
         body,
       }),
     }),
-    fetchConsentData: builder.query<any[], void>({
-      query: () => `/api/apps/consentData`,
-    }),
-    fetchConsent: builder.query<any[], void>({
-      query: () => `/api/apps/consent`,
-    }),
     addContractConsent: builder.mutation<void, any>({
       query: (body: any) => ({
-        url: `/api/apps/createapp`,
+        url: `/api/Apps/createapp`,
         method: 'POST',
         body,
       }),
@@ -84,7 +127,7 @@ export const apiSlice = createApi({
       query: (data: any) => {
         const { body, appId } = data
         return {
-          url: `/api/apps/appreleaseprocess/updateapp/${appId}`,
+          url: `/api/apps/AppReleaseProcess/updateapp/${appId}`,
           method: 'PUT',
           body,
         }
@@ -92,10 +135,48 @@ export const apiSlice = createApi({
     }),
     submitapp: builder.mutation<any, string>({
       query: (appId) => ({
-        url: `/api/apps/${appId}/submit`,
+        url: `/api/Apps/${appId}/submit`,
         method: 'PUT',
       }),
     }),
+    updateDocumentUpload: builder.mutation({
+      async queryFn(
+        data: { appId: string; documentTypeId: string; body: any },
+        _queryApi,
+        _extraOptions,
+        fetchWithBaseQuery
+      ) {
+        const formData = new FormData()
+        formData.append('document', data.body.file)
+
+        const response = await fetchWithBaseQuery({
+          url: `/api/apps/AppReleaseProcess/updateappdoc/${data.appId}/documentType/${data.documentTypeId}/documents`,
+          method: 'PUT',
+          body: formData,
+        })
+        return response.data
+          ? { data: response.data }
+          : { error: response.error }
+      },
+    }),
+    fetchAppStatus: builder.query<any, string>({
+      query: (appId) => `api/apps/appreleaseprocess/${appId}/appStatus`,
+    }),
+    fetchAgreementData: builder.query<AgreementType[], void>({
+      query: () => `api/apps/AppReleaseProcess/agreementData`,
+    }),
+    fetchConsentData: builder.query<ConsentType, string>({
+      query: (appId: string) => `/api/apps/AppReleaseProcess/consent/${appId}`,
+    }),
+    updateAgreementConsents: builder.mutation<void, UpdateAgreementConsentType>(
+      {
+        query: (data: UpdateAgreementConsentType) => ({
+          url: `/api/apps/AppReleaseProcess/consent/${data.appId}/agreementConsents`,
+          method: 'POST',
+          body: data.body,
+        }),
+      }
+    ),
   }),
 })
 
@@ -103,9 +184,12 @@ export const {
   useFetchUseCasesQuery,
   useFetchAppLanguagesQuery,
   useAddCreateAppMutation,
-  useFetchConsentDataQuery,
-  useFetchConsentQuery,
   useAddContractConsentMutation,
   useUpdateappMutation,
   useSubmitappMutation,
+  useUpdateDocumentUploadMutation,
+  useFetchAppStatusQuery,
+  useFetchAgreementDataQuery,
+  useFetchConsentDataQuery,
+  useUpdateAgreementConsentsMutation,
 } = apiSlice

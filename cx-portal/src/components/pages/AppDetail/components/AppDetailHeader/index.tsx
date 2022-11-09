@@ -18,13 +18,16 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { useSelector } from 'react-redux'
-import { Button, Typography } from 'cx-portal-shared-components'
+import { useSelector, useDispatch } from 'react-redux'
+import { Button, Typography, Tooltips } from 'cx-portal-shared-components'
 import { useTranslation } from 'react-i18next'
 import { AppDetails } from 'features/apps/details/types'
 import { getAppLeadImage } from 'features/apps/mapper'
 import { userSelector } from 'features/user/slice'
 import './AppDetailHeader.scss'
+import { OVERLAYS } from 'types/Constants'
+import { show } from 'features/control/overlay/actions'
+import { useParams } from 'react-router-dom'
 
 export interface AppDetailHeaderProps {
   item: AppDetails
@@ -32,17 +35,47 @@ export interface AppDetailHeaderProps {
 
 export default function AppDetailHeader({ item }: AppDetailHeaderProps) {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const { appId } = useParams()
   const user = useSelector(userSelector)
 
   const getSubscribeBtn = () => {
     const subscribeStatus = item.isSubscribed
     if (subscribeStatus === 'PENDING') {
-      return <Button color="secondary">{t('content.appdetail.pending')}</Button>
+      return (
+        <Tooltips
+          additionalStyles={{
+            curson: 'pointer',
+            marginTop: '30px !important',
+          }}
+          tooltipPlacement="bottom-start"
+          tooltipText={t('content.appdetail.pendingTooltip')}
+          children={
+            <span>
+              <Button color="secondary">
+                {t('content.appdetail.pending')}
+              </Button>
+            </span>
+          }
+        />
+      )
     } else if (subscribeStatus === 'ACTIVE') {
       return (
-        <span className="subscribed-success-btn">
-          <Button color="success">{t('content.appdetail.subscribed')}</Button>
-        </span>
+        <Tooltips
+          additionalStyles={{
+            curson: 'pointer',
+            marginTop: '30px !important',
+          }}
+          tooltipPlacement="bottom-start"
+          tooltipText={t('content.appdetail.subscribedTooltip')}
+          children={
+            <span>
+              <Button color="success">
+                {t('content.appdetail.subscribed')}
+              </Button>
+            </span>
+          }
+        />
       )
     } else {
       return (
@@ -52,6 +85,7 @@ export default function AppDetailHeader({ item }: AppDetailHeaderProps) {
               ? 'primary'
               : 'secondary'
           }
+          onClick={() => dispatch(show(OVERLAYS.APPMARKETPLACE_REQUEST, appId))}
         >
           {t('content.appdetail.subscribe')}
         </Button>

@@ -28,6 +28,7 @@ import {
   MultiSelectList,
   Checkbox,
   PageNotifications,
+  LogoGrayData,
 } from 'cx-portal-shared-components'
 import { useTranslation } from 'react-i18next'
 import { Grid, Divider, Box } from '@mui/material'
@@ -38,6 +39,7 @@ import {
   useFetchUseCasesQuery,
   useFetchAppLanguagesQuery,
   useAddCreateAppMutation,
+  useUpdateDocumentUploadMutation,
 } from 'features/appManagement/apiSlice'
 import { useNavigate } from 'react-router-dom'
 import { Controller, useForm } from 'react-hook-form'
@@ -58,7 +60,7 @@ type FormDataType = {
   appLanguage: string[]
   price: string
   uploadImage: {
-    leadPictureUri: string
+    leadPictureUri: File | null
     alt: string
   }
   providerCompanyId: string
@@ -84,6 +86,8 @@ export const ConnectorFormInputField = ({
   maxFilesToUpload,
   previewFiles,
   showPreviewAlone,
+  maxFileSize,
+  defaultValues,
 }: any) => (
   <Controller
     name={name}
@@ -117,19 +121,23 @@ export const ConnectorFormInputField = ({
           <Dropzone
             onFileDrop={(files: any) => {
               trigger(name)
-              onChange(files[0].name)
+              onChange(files[0])
             }}
             acceptFormat={acceptFormat}
             maxFilesToUpload={maxFilesToUpload}
             previewFiles={previewFiles}
             showPreviewAlone={showPreviewAlone}
+            maxFileSize={maxFileSize}
           />
         )
       } else if (type === 'checkbox') {
         return (
           <>
             <Checkbox
+              key={name}
               label={label}
+              defaultChecked={defaultValues}
+              value={defaultValues}
               checked={value}
               onChange={(event) => {
                 trigger(name)
@@ -175,6 +183,7 @@ export default function AppMarketCard() {
   const useCasesList = useFetchUseCasesQuery().data || []
   const appLanguagesList = useFetchAppLanguagesQuery().data || []
   const [addCreateApp] = useAddCreateAppMutation()
+  const [updateDocumentUpload] = useUpdateDocumentUploadMutation()
   const [appCardNotification, setAppCardNotification] = useState(false)
 
   const defaultValues = {
@@ -188,7 +197,7 @@ export default function AppMarketCard() {
     shortDescriptionEN: '',
     shortDescriptionDE: '',
     uploadImage: {
-      leadPictureUri: '',
+      leadPictureUri: null,
       alt: '',
     },
   }
@@ -213,9 +222,7 @@ export default function AppMarketCard() {
   const cardDescription =
     getValues().shortDescriptionEN ||
     t('content.apprelease.appMarketCard.defaultCardShortDescriptionEN')
-  const cardImageSrc =
-    getValues().uploadImage.leadPictureUri ||
-    'https://catenaxdev003util.blob.core.windows.net/assets/apps/images/Lead-Default.png'
+  const cardImageSrc = getValues().uploadImage.leadPictureUri || LogoGrayData
   const cardImageAlt =
     getValues().uploadImage.alt ||
     t('content.apprelease.appMarketCard.defaultCardAppImageAlt')
@@ -242,7 +249,10 @@ export default function AppMarketCard() {
     const saveData = {
       title: data.title,
       provider: data.provider,
-      leadPictureUri: data.uploadImage.leadPictureUri,
+      leadPictureUri:
+        data.uploadImage.leadPictureUri !== null &&
+        Object.keys(data.uploadImage.leadPictureUri).length > 0 &&
+        Object.values(data.uploadImage.leadPictureUri)[0],
       providerCompanyId: data.providerCompanyId,
       useCaseIds: data.useCaseCategory,
       descriptions: [
@@ -261,9 +271,12 @@ export default function AppMarketCard() {
       price: data.price,
     }
 
+    const uploadImageValue = getValues().uploadImage.leadPictureUri
     await addCreateApp(saveData)
       .unwrap()
       .then((result) => {
+        isString(result) &&
+          uploadDocumentApi(result, 'APP_LEADIMAGE', uploadImageValue)
         isString(result) && dispatch(setAppId(result))
         dispatch(increment())
       })
@@ -272,31 +285,37 @@ export default function AppMarketCard() {
       })
   }
 
+  const uploadDocumentApi = async (
+    appId: string,
+    documentTypeId: string,
+    file: any
+  ) => {
+    const data = {
+      appId: appId,
+      documentTypeId: documentTypeId,
+      body: { file },
+    }
+
+    try {
+      await updateDocumentUpload(data).unwrap()
+    } catch (error) {}
+  }
+
   return (
     <div className="app-market-card">
-      {!pageScrolled && (
-        <>
-          <Typography variant="h3" mt={10} mb={4} align="center">
-            {t('content.apprelease.appMarketCard.headerTitle')}
-          </Typography>
-          <Typography
-            variant="body2"
-            className="header-description"
-            align="center"
-          >
+      <Typography variant="h3" mt={10} mb={4} align="center">
+        {t('content.apprelease.appMarketCard.headerTitle')}
+      </Typography>
+      <Grid container spacing={2}>
+        <Grid item md={11} sx={{ mr: 'auto', ml: 'auto' }}>
+          <Typography variant="body2" align="center">
             {t('content.apprelease.appMarketCard.headerDescription')}
           </Typography>
-        </>
-      )}
-
-      <Grid container spacing={2} sx={{ mt: pageScrolled ? 10 : 0 }}>
+        </Grid>
+      </Grid>
+      <Grid container spacing={2} sx={{ mt: 10 }}>
         {pageScrolled ? (
-          <Grid
-            item
-            md={3}
-            sx={{ mt: 0, mr: 'auto', mb: 10, ml: 'auto' }}
-            className={'app-release-card'}
-          >
+          <Grid item md={3} className={'app-release-card'}>
             <Card
               image={{
                 src: cardImageSrc,
@@ -311,6 +330,8 @@ export default function AppMarketCard() {
               expandOnHover={false}
               filledBackground={true}
               buttonText={''}
+              positionValue="sticky"
+              topValue={50}
             />
           </Grid>
         ) : (
@@ -329,8 +350,8 @@ export default function AppMarketCard() {
 
         <Grid
           item
-          md={pageScrolled ? 9 : 8}
-          sx={{ mt: 0, mr: 'auto', mb: 0, ml: 'auto' }}
+          md={8}
+          sx={{ mt: 0, mr: 'auto', mb: 0, ml: pageScrolled ? 0 : 'auto' }}
         >
           <form>
             <div className="form-field">
@@ -341,9 +362,6 @@ export default function AppMarketCard() {
                   errors,
                   name: 'title',
                   label: t('content.apprelease.appMarketCard.appTitle') + ' *',
-                  placeholder: t(
-                    'content.apprelease.appMarketCard.appTitlePlaceholder'
-                  ),
                   type: 'input',
                   rules: {
                     required: {
@@ -388,9 +406,6 @@ export default function AppMarketCard() {
                   name: 'provider',
                   label:
                     t('content.apprelease.appMarketCard.appProvider') + ' *',
-                  placeholder: t(
-                    'content.apprelease.appMarketCard.appProviderPlaceholder'
-                  ),
                   type: 'input',
                   rules: {
                     required: {
@@ -445,9 +460,6 @@ export default function AppMarketCard() {
                             </IconButton>
                           </>
                         ),
-                        placeholder: t(
-                          `content.apprelease.appMarketCard.${item}`
-                        ),
                         type: 'input',
                         textarea: true,
                         rules: {
@@ -476,8 +488,8 @@ export default function AppMarketCard() {
                               'content.apprelease.appReleaseForm.validCharactersIncludes'
                             )} ${
                               item === 'shortDescriptionEN'
-                                ? 'A-Za-z0-9.: @&,'
-                                : 'A-Za-z0-9.: @&,äüö'
+                                ? `a-zA-Z0-9 !?@&#'"()_-=/*.,;:`
+                                : `a-zA-ZÀ-ÿ0-9 !?@&#'"()_-=/*.,;:`
                             }`,
                           },
                           maxLength: {
@@ -599,9 +611,6 @@ export default function AppMarketCard() {
                   label:
                     t('content.apprelease.appMarketCard.pricingInformation') +
                     ' *',
-                  placeholder: t(
-                    'content.apprelease.appMarketCard.pricingInformationPlaceholder'
-                  ),
                   type: 'input',
                   rules: {
                     required: {
@@ -649,6 +658,7 @@ export default function AppMarketCard() {
                   'image/jpeg': [],
                 },
                 maxFilesToUpload: 1,
+                maxFileSize: 819200,
                 rules: {
                   required: {
                     value: true,
