@@ -164,13 +164,13 @@ export default function SemanticHub() {
         <ModelTable onModelSelect={onModelSelect} />
       </main>
       <ModelDetailDialog show={showModel} onClose={onDetailClose} />
-      {modelId &&
+      {modelId && (
         <CXOntologyDialog
           show={showCXOntology}
           url={modelId}
           onClose={onCXOntologyClose}
         />
-      }
+      )}
       <ModelImportDialog
         show={importModel}
         onClose={() => setImportModel(false)}

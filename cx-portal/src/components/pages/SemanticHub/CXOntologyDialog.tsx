@@ -31,7 +31,6 @@ interface CXOntologyDialogProps {
   onClose: () => void
 }
 
-
 const CXOntologyDialog = ({ show, url, onClose }: CXOntologyDialogProps) => {
   return (
     <Dialog open={show}>
@@ -41,11 +40,11 @@ const CXOntologyDialog = ({ show, url, onClose }: CXOntologyDialogProps) => {
         onCloseWithIcon={onClose}
       />
       <DialogContent sx={{ pt: 1 }}>
-        {url.includes('KA-125') ?
+        {url.includes('KA-125') ? (
           <OntologyViewWebVowl dataUrl={url} />
-        :
+        ) : (
           <OntologyView dataUrl={url} />
-        }
+        )}
       </DialogContent>
     </Dialog>
   )
