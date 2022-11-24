@@ -41,7 +41,7 @@ const CXOntologyDialog = ({ show, url, onClose }: CXOntologyDialogProps) => {
       />
       <DialogContent sx={{ pt: 1 }}>
         {url.includes('KA-125') ? (
-          <OntologyViewWebVowl dataUrl={url} />
+          <iframe title="WebVowl" width="100%" height={700} src={`https://service.tib.eu/webvowl/#url=${url}`} />
         ) : (
           <OntologyView dataUrl={url} />
         )}

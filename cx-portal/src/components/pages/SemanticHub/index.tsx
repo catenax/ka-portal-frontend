@@ -40,7 +40,7 @@ export default function SemanticHub() {
   const kaOntology =
     'https://raw.githubusercontent.com/catenax-ng/product-knowledge/main/infrastructure/consumer/resources/cx-ontology.json'
   const kaOntologyVowl =
-    'https://raw.githubusercontent.com/catenax-ng/product-knowledge/feature/KA-125-ontology-hub/ontology/cx.json'
+    'https://raw.githubusercontent.com/catenax-ng/product-knowledge/feature/KA-125-ontology-hub/ontology/address_ontology_vowl.json'
   const { t } = useTranslation()
   const navigate = useNavigate()
   const dispatch = useDispatch()
