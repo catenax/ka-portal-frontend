@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { OntologyView, OntologyViewWebVowl } from '@catenax-ng/skill-modules'
+import { OntologyView } from '@catenax-ng/skill-modules'
 import {
   Dialog,
   DialogHeader,
