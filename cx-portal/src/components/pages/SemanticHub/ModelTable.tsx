@@ -31,6 +31,7 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { SemanticModelTableColumns } from './SemanticModelTableColumn'
 import uniqueId from 'lodash/uniqueId'
+import { OntologyHubService } from '@catenax-ng/skill-modules'
 
 interface ModelTableProps {
   onModelSelect: (id: string) => void
@@ -102,11 +103,20 @@ const ModelTable = ({ onModelSelect }: ModelTableProps) => {
   }, [uploadedModel])
 
   useEffect(() => {
-    if (models.length > 0 && pageNumber > 0) {
-      if (modelList.items.length > 0)
-        setModels((prevModels) => prevModels.concat(modelList.items))
-    } else {
-      setModels(modelList.items)
+    if(modelList.items.length > 0){
+      const ontologyHubService = OntologyHubService;
+      let rows: SemanticModel[] = []
+      ontologyHubService().then(data => {
+        rows = data.map(model => ({...model, urn: model.vowl}))
+        rows.push(...modelList.items)
+        rows.sort((a,b) => a.name.localeCompare(b.name))
+        if (models.length > 0 && pageNumber > 0) {
+          if (modelList.items.length > 0)
+            setModels((prevModels) => prevModels.concat(rows))
+        } else {
+          setModels(rows)
+        }
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modelList])

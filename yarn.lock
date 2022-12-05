@@ -1173,10 +1173,10 @@
   "resolved" "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   "version" "0.2.3"
 
-"@catenax-ng/skill-modules@^0.5.5":
-  "integrity" "sha512-YnTfLtF5rjPV6iBQ8YI2pxr48t+/Q1q6C/IV90n787wt7iQl5HiNbmX9FkgtNKrLuCAvufSoVsJWziHoe+0XqA=="
-  "resolved" "https://npm.pkg.github.com/download/@catenax-ng/skill-modules/0.5.5/61ecb5ea41614be2d952fc4742f9036fdfa99ce5"
-  "version" "0.5.5"
+"@catenax-ng/skill-modules@^0.6.4":
+  "integrity" "sha512-SNzrPA1ebUssLc7zgG4QEuLYbsqGU44LEjne1uIPKUZdSujJjwve8ZG7/KhMhx/PJLb+YabmIxF0RA0L9VH4WQ=="
+  "resolved" "https://npm.pkg.github.com/download/@catenax-ng/skill-modules/0.6.5/f13dfc56762c5e19aaa675c8366de3faac8a2023"
+  "version" "0.6.5"
   dependencies:
     "@types/react-cytoscapejs" "^1.2.2"
     "cytoscape" "^3.22.1"
@@ -3788,16 +3788,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*":
-  "integrity" "sha512-chYZ9ogWUodyC7VUTRBfblysKLjnohhFY9bGLwvnUFFy48+vB9DikmB3lW0qTFmBcKSzmdglcvkHK71IioOlDA=="
-  "resolved" "https://registry.npmjs.org/@types/react/-/react-17.0.41.tgz"
-  "version" "17.0.41"
-  dependencies:
-    "@types/prop-types" "*"
-    "@types/scheduler" "*"
-    "csstype" "^3.0.2"
-
-"@types/react@^16", "@types/react@^16.14.23":
+"@types/react@*", "@types/react@^16", "@types/react@^16.14.23":
   "integrity" "sha512-e7U2WC8XQP/xfR7bwhOhNFZKPTfW1ph+MiqtudKb8tSV8RyCsovQx2sNVtKoOryjxFKpHPPC/yNiGfdeVM5Gyw=="
   "resolved" "https://registry.npmjs.org/@types/react/-/react-16.14.24.tgz"
   "version" "16.14.24"
@@ -6517,7 +6508,7 @@
   "resolved" "file:cx-portal"
   "version" "0.7.0"
   dependencies:
-    "@catenax-ng/skill-modules" "^0.5.4"
+    "@catenax-ng/skill-modules" "^0.5.5"
     "@mui/icons-material" "^5.5.1"
     "@react-hook/cache" "^1.1.1"
     "@reduxjs/toolkit" "^1.7.2"
@@ -6551,9 +6542,9 @@
   "version" "1.0.1"
 
 "cytoscape-dagre@^2.4.0":
-  "integrity" "sha512-jfOtKzKduCnruBs3YMHS9kqWjZKqvp6loSJwlotPO5pcU4wLUhkx7ZBIyW3VWZXa8wfkGxv/zhWoBxWtYrUxKQ=="
-  "resolved" "https://registry.npmjs.org/cytoscape-dagre/-/cytoscape-dagre-2.4.0.tgz"
-  "version" "2.4.0"
+  "integrity" "sha512-VG2Knemmshop4kh5fpLO27rYcyUaaDkRw+6PiX4bstpB+QFt0p2oauMrsjVbUamGWQ6YNavh7x2em2uZlzV44g=="
+  "resolved" "https://registry.npmjs.org/cytoscape-dagre/-/cytoscape-dagre-2.5.0.tgz"
+  "version" "2.5.0"
   dependencies:
     "dagre" "^0.8.5"
 

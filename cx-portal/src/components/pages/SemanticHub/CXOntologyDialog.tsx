@@ -18,7 +18,6 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { OntologyView } from '@catenax-ng/skill-modules'
 import {
   Dialog,
   DialogHeader,
@@ -32,24 +31,21 @@ interface CXOntologyDialogProps {
 }
 
 const CXOntologyDialog = ({ show, url, onClose }: CXOntologyDialogProps) => {
+
   return (
-    <Dialog open={show}>
+    <Dialog open={show} sx={{ width: '100%'}}>
       <DialogHeader
         title="CX Ontology"
         closeWithIcon
         onCloseWithIcon={onClose}
       />
       <DialogContent sx={{ pt: 1 }}>
-        {url.includes('KA-125') ? (
-          <iframe
-            title="WebVowl"
-            width="100%"
-            height={700}
-            src={`https://service.tib.eu/webvowl/#url=${url}`}
-          />
-        ) : (
-          <OntologyView dataUrl={url} />
-        )}
+        <iframe
+          title="WebVowl"
+          width="1360px"
+          height={700}
+          src={`https://service.tib.eu/webvowl/#url=${url}`}
+        />
       </DialogContent>
     </Dialog>
   )
