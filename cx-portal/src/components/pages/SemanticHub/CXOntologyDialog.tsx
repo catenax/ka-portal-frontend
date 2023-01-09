@@ -31,9 +31,8 @@ interface CXOntologyDialogProps {
 }
 
 const CXOntologyDialog = ({ show, url, onClose }: CXOntologyDialogProps) => {
-
   return (
-    <Dialog open={show} sx={{ width: '100%'}}>
+    <Dialog open={show} sx={{ width: '100%' }}>
       <DialogHeader
         title="CX Ontology"
         closeWithIcon

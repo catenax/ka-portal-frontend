@@ -103,13 +103,13 @@ const ModelTable = ({ onModelSelect }: ModelTableProps) => {
   }, [uploadedModel])
 
   useEffect(() => {
-    if(modelList.items.length > 0){
-      const ontologyHubService = OntologyHubService;
+    if (modelList.items.length > 0) {
+      const ontologyHubService = OntologyHubService
       let rows: SemanticModel[] = []
-      ontologyHubService().then(data => {
-        rows = data.map(model => ({...model, urn: model.vowl}))
+      ontologyHubService().then((data) => {
+        rows = data.map((model) => ({ ...model, urn: model.vowl }))
         rows.push(...modelList.items)
-        rows.sort((a,b) => a.name.localeCompare(b.name))
+        rows.sort((a, b) => a.name.localeCompare(b.name))
         if (models.length > 0 && pageNumber > 0) {
           if (modelList.items.length > 0)
             setModels((prevModels) => prevModels.concat(rows))
